@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Punktpartiet</title>
+  <meta name="theme-color" content="#0b1428" />
+  <link rel="stylesheet" href="/assets/styles.css" />
+</head>
+
+<body>
+  <!-- Header -->
+  <header class="site-header">
+    <div class="header-inner">
+      <!-- Left: Logo -->
+      <a class="brand" href="/" aria-label="Punktpartiet – startsida">
+        <span class="brand-mark" aria-hidden="true">P</span>
+        <span class="brand-name">Punktpartiet</span>
+      </a>
+
+      <!-- Center: Nav links (desktop) -->
+      <nav class="nav-links" aria-label="Huvudmeny">
+        <a href="/politik/" class="nav-link">Vår politik</a>
+        <a href="/politiker/" class="nav-link">Våra politiker</a>
+        <a href="/engagera/" class="nav-link">Engagera dig</a>
+      </nav>
+
+      <!-- Right: CTA + Hamburger -->
+      <div class="header-actions">
+        <button class="btn btn-primary" id="openMemberBtn" type="button">
+          Bli medlem
+        </button>
+
+        <div class="menu-wrap">
+          <button
+            class="icon-btn"
+            id="menuBtn"
+            type="button"
+            aria-haspopup="menu"
+            aria-expanded="false"
+            aria-controls="moreMenu"
+            aria-label="Öppna meny"
+          >
+            <span class="burger" aria-hidden="true"></span>
+          </button>
+
+          <!-- Dropdown menu (right aligned) -->
+          <div class="menu" id="moreMenu" role="menu" aria-label="Fler länkar">
+            <!-- Mobile: repeat primary links -->
+            <div class="menu-section mobile-only">
+              <a role="menuitem" href="/politik/" class="menu-item">Vår politik</a>
+              <a role="menuitem" href="/politiker/" class="menu-item">Våra politiker</a>
+              <a role="menuitem" href="/engagera/" class="menu-item">Engagera dig</a>
+              <div class="menu-divider"></div>
+            </div>
+
+            <!-- Extra pages -->
+            <a role="menuitem" href="/nyheter/" class="menu-item">Nyheter</a>
+            <a role="menuitem" href="/press/" class="menu-item">Press</a>
+            <a role="menuitem" href="/kontakt/" class="menu-item">Kontakt</a>
+            <a role="menuitem" href="/faq/" class="menu-item">Vanliga frågor</a>
+            <a role="menuitem" href="/integritet/" class="menu-item">Integritetspolicy</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main -->
+  <main class="page">
+    <section class="hero">
+      <div class="hero-card">
+        <h1>Punktpartiet</h1>
+        <p class="lead">
+          Ett sakligt alternativ med fokus på resultat, ansvar och ett Sverige som fungerar.
+        </p>
+        <div class="hero-actions">
+          <a class="btn btn-ghost" href="/politik/">Läs vår politik</a>
+          <button class="btn btn-primary" id="openMemberBtn2" type="button">Bli medlem</button>
+        </div>
+      </div>
+
+      <div class="grid-3">
+        <div class="card">
+          <h3>Tydliga prioriteringar</h3>
+          <p>Vi förenklar, fokuserar och levererar. Mindre brus, mer verkstad.</p>
+        </div>
+        <div class="card">
+          <h3>Nära verkligheten</h3>
+          <p>Politik som tar avstamp i vardagen: trygghet, ekonomi och välfärd.</p>
+        </div>
+        <div class="card">
+          <h3>Öppenhet</h3>
+          <p>Transparens och ansvar – så att förtroende byggs på riktigt.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-inner">
+        <h2>Engagera dig</h2>
+        <p>
+          Vill du bidra lokalt eller nationellt? Vi välkomnar både nya och erfarna.
+        </p>
+        <div class="section-actions">
+          <a class="btn btn-ghost" href="/engagera/">Så kan du hjälpa</a>
+          <button class="btn btn-primary" id="openMemberBtn3" type="button">Bli medlem</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Member Modal -->
+  <div class="modal-backdrop" id="memberModalBackdrop" hidden></div>
+
+  <section
+    class="modal"
+    id="memberModal"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="memberModalTitle"
+    hidden
+  >
+    <div class="modal-card">
+      <div class="modal-header">
+        <h2 id="memberModalTitle">Bli medlem</h2>
+        <button class="icon-btn" id="closeMemberBtn" type="button" aria-label="Stäng">
+          ✕
+        </button>
+      </div>
+
+      <p class="modal-sub">
+        Fyll i formuläret så kontaktar vi dig. (Skickas via Resend.)
+      </p>
+
+      <form class="form" id="memberForm">
+        <div class="form-row">
+          <label>
+            Förnamn
+            <input name="firstName" autocomplete="given-name" required />
+          </label>
+          <label>
+            Efternamn
+            <input name="lastName" autocomplete="family-name" required />
+          </label>
+        </div>
+
+        <div class="form-row">
+          <label>
+            E-post
+            <input name="email" type="email" autocomplete="email" required />
+          </label>
+          <label>
+            Telefon (valfritt)
+            <input name="phone" autocomplete="tel" />
+          </label>
+        </div>
+
+        <label>
+          Ort (valfritt)
+          <input name="city" autocomplete="address-level2" />
+        </label>
+
+        <label>
+          Meddelande (valfritt)
+          <textarea name="message" rows="4" placeholder="Kort om hur du vill engagera dig…"></textarea>
+        </label>
+
+        <div class="form-actions">
+          <button class="btn btn-primary" type="submit" id="submitMemberBtn">
+            Skicka
+          </button>
+          <button class="btn btn-ghost" type="button" id="cancelMemberBtn">
+            Avbryt
+          </button>
+        </div>
+
+        <p class="form-status" id="memberFormStatus" aria-live="polite"></p>
+      </form>
+
+      <p class="fineprint">
+        Genom att skicka in godkänner du att vi behandlar dina uppgifter för att kontakta dig.
+        Läs mer i <a href="/integritet/">integritetspolicyn</a>.
+      </p>
+    </div>
+  </section>
+
+  <script src="/assets/main.js" defer></script>
+</body>
+</html>
