@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Punktpartiet</title>
+  <meta name="theme-color" content="#0b1428" />
+
+  <style>
+    :root{
+      --bg:#0b1428;
+      --bg-alt:#070d1c;
+      --card:rgba(255,255,255,.06);
+      --card-2:rgba(255,255,255,.08);
+      --text:rgba(255,255,255,.92);
+      --muted:rgba(255,255,255,.7);
+      --line:rgba(255,255,255,.14);
+      --accent:#5ee7ff;
+      --shadow:0 18px 60px rgba(0,0,0,.45);
+      --radius:18px;
+      --max:1040px;
+    }
+
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;
+      color:var(--text);
+      background:
+        radial-gradient(1000px 700px at 20% 0%, rgba(94,231,255,.15), transparent 60%),
+        linear-gradient(180deg,var(--bg),var(--bg-alt));
+    }
+
+    /* HEADER */
+    header{
+      position:sticky;
+      top:0;
+      z-index:50;
+      backdrop-filter:blur(10px);
+      background:rgba(7,13,28,.55);
+      border-bottom:1px solid var(--line);
+    }
+
+    .header-inner{
+      max-width:var(--max);
+      margin:auto;
+      padding:12px 16px;
+      display:grid;
+      grid-template-columns:auto 1fr auto;
+      align-items:center;
+      gap:14px;
+    }
+
+    .brand{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      text-decoration:none;
+      color:var(--text);
+      font-weight:700;
+    }
+
+    .logo{
+      width:34px;
+      height:34px;
+      border-radius:50%;
+      display:grid;
+      place-items:center;
+      background:rgba(94,231,255,.2);
+      border:1px solid rgba(94,231,255,.4);
+      font-weight:800;
+    }
+
+    nav{
+      display:flex;
+      justify-content:center;
+      gap:18px;
+    }
+
+    nav a{
+      color:var(--muted);
+      text-decoration:none;
+      font-weight:600;
+      padding:8px 10px;
+      border-radius:12px;
+    }
+
+    nav a:hover{
+      background:rgba(255,255,255,.06);
+      color:var(--text);
+    }
+
+    .actions{
+      display:flex;
+      gap:10px;
+      align-items:center;
+    }
+
+    .btn{
+      border:1px solid var(--line);
+      background:transparent;
+      color:var(--text);
+      padding:10px 14px;
+      border-radius:999px;
+      font-weight:700;
+      cursor:pointer;
+    }
+
+    .btn.primary{
+      background:rgba(94,231,255,.2);
+      border-color:rgba(94,231,255,.5);
+    }
+
+    .icon-btn{
+      width:42px;
+      height:42px;
+      border-radius:50%;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.05);
+      cursor:pointer;
+      display:grid;
+      place-items:center;
+    }
+
+    .burger,
+    .burger:before,
+    .burger:after{
+      content:"";
+      width:18px;
+      height:2px;
+      background:#fff;
+      border-radius:2px;
+      display:block;
+      position:relative;
+    }
+
+    .burger:before{top:-6px;position:absolute}
+    .burger:after{top:6px;position:absolute}
+
+    /* DROPDOWN */
+    .menu-wrap{position:relative}
+    .menu{
+      position:absolute;
+      top:calc(100% + 10px);
+      right:0;
+      background:rgba(15,23,42,.95);
+      border:1px solid var(--line);
+      border-radius:14px;
+      box-shadow:var(--shadow);
+      min-width:240px;
+      padding:8px;
+      display:none;
+    }
+
+    .menu.open{display:block}
+
+    .menu a{
+      display:block;
+      padding:10px 12px;
+      border-radius:10px;
+      color:var(--muted);
+      text-decoration:none;
+      font-weight:600;
+    }
+
+    .menu a:hover{
+      background:rgba(255,255,255,.08);
+      color:var(--text);
+    }
+
+    /* PAGE */
+    main{
+      max-width:var(--max);
+      margin:auto;
+      padding:40px 16px 80px;
+    }
+
+    h1{
+      font-size:44px;
+      letter-spacing:-.03em;
+    }
+
+    .lead{
+      max-width:60ch;
+      color:var(--muted);
+      font-size:18px;
+    }
+
+    /* MODAL */
+    .backdrop{
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,.6);
+      display:none;
+      z-index:80;
+    }
+
+    .modal{
+      position:fixed;
+      inset:0;
+      display:none;
+      place-items:center;
+      z-index:90;
+    }
+
+    .modal-card{
+      width:min(640px,100%);
+      background:rgba(15,23,42,.95);
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:20px;
+      box-shadow:var(--shadow);
+    }
+
+    .modal.open,
+    .backdrop.open{
+      display:grid;
+    }
+
+    label{
+      display:block;
+      margin-bottom:10px;
+      font-weight:600;
+      font-size:14px;
+    }
+
+    input,textarea{
+      width:100%;
+      padding:10px;
+      border-radius:10px;
+      border:1px solid rgba(255,255,255,.2);
+      background:rgba(255,255,255,.05);
+      color:white;
+    }
+
+    @media(max-width:880px){
+      nav{display:none}
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="/" class="brand">
+      <div class="logo">P</div>
+      Punktpartiet
+    </a>
+
+    <nav>
+      <a href="/politik/">Vår politik</a>
+      <a href="/politiker/">Våra politiker</a>
+      <a href="/engagera/">Engagera dig</a>
+    </nav>
+
+    <div class="actions">
+      <button class="btn primary" id="openMember">Bli medlem</button>
+
+      <div class="menu-wrap">
+        <button class="icon-btn" id="menuBtn">
+          <span class="burger"></span>
+        </button>
+
+        <div class="menu" id="menu">
+          <a href="/nyheter/">Nyheter</a>
+          <a href="/press/">Press</a>
+          <a href="/kontakt/">Kontakt</a>
+          <a href="/integritet/">Integritetspolicy</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main>
+  <h1>Punktpartiet</h1>
+  <p class="lead">
+    Ett sakligt alternativ med fokus på resultat, ansvar och ett Sverige som fungerar.
+  </p>
+</main>
+
+<!-- MODAL -->
+<div class="backdrop" id="backdrop"></div>
+
+<div class="modal" id="modal">
+  <div class="modal-card">
+    <h2>Bli medlem</h2>
+
+    <form id="memberForm">
+      <label>Förnamn
+        <input name="firstName" required>
+      </label>
+
+      <label>Efternamn
+        <input name="lastName" required>
+      </label>
+
+      <label>E-post
+        <input type="email" name="email" required>
+      </label>
+
+      <label>Meddelande
+        <textarea name="message"></textarea>
+      </label>
+
+      <button class="btn primary" type="submit">Skicka</button>
+      <button class="btn" type="button" id="closeMember">Avbryt</button>
+
+      <p id="status"></p>
+    </form>
+  </div>
+</div>
+
+<script>
+  // Dropdown
+  const menuBtn = document.getElementById("menuBtn");
+  const menu = document.getElementById("menu");
+
+  menuBtn.onclick = (e) => {
+    e.stopPropagation();
+    menu.classList.toggle("open");
+  };
+
+  document.addEventListener("click", () => menu.classList.remove("open"));
+
+  // Modal
+  const modal = document.getElementById("modal");
+  const backdrop = document.getElementById("backdrop");
+  const openBtn = document.getElementById("openMember");
+  const closeBtn = document.getElementById("closeMember");
+
+  openBtn.onclick = () => {
+    modal.classList.add("open");
+    backdrop.classList.add("open");
+  };
+
+  closeBtn.onclick = () => {
+    modal.classList.remove("open");
+    backdrop.classList.remove("open");
+  };
+
+  backdrop.onclick = closeBtn.onclick;
+
+  // Form submit (Resend via Worker)
+  const form = document.getElementById("memberForm");
+  const status = document.getElementById("status");
+
+  form.onsubmit = async (e) => {
+    e.preventDefault();
+    status.textContent = "Skickar…";
+
+    const data = Object.fromEntries(new FormData(form));
+
+    try {
+      const res = await fetch("https://api.punktpartiet.se/member", {
+        method:"POST",
+        headers:{ "Content-Type":"application/json" },
+        body:JSON.stringify(data)
+      });
+
+      if(res.ok){
+        status.textContent = "Tack! Vi hör av oss.";
+        form.reset();
+      }else{
+        status.textContent = "Något gick fel.";
+      }
+    } catch {
+      status.textContent = "Nätverksfel.";
+    }
+  };
+</script>
+
+</body>
+</html>
