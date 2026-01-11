@@ -1,0 +1,1113 @@
+```html
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Punktpartiet – Vår politik</title>
+  <meta name="theme-color" content="#f7f8fb" />
+
+  <style>
+    :root{
+      /* Light theme */
+      --bg: #f7f8fb;
+      --bg-alt: #eef2f7;
+      --surface: #ffffff;
+      --surface-2: #f3f6fb;
+
+      --text: #101828;
+      --muted: #475467;
+
+      --line: rgba(16,24,40,0.12);
+
+      /* Accent (clean political blue) */
+      --accent: #2563eb;
+      --accent-soft: rgba(37,99,235,0.12);
+
+      --shadow: 0 18px 60px rgba(16,24,40,0.12);
+      --shadow-soft: 0 10px 30px rgba(16,24,40,0.10);
+
+      --radius: 18px;
+      --max: 1040px;
+    }
+
+    *{ box-sizing:border-box; }
+    html, body { height: 100%; }
+
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system_toggle, Segoe UI, Roboto, Arial;
+      color: var(--text);
+      background:
+        radial-gradient(1100px 750px at 20% 0%, rgba(37,99,235,0.10), transparent 60%),
+        radial-gradient(900px 650px at 80% 10%, rgba(37,99,235,0.06), transparent 55%),
+        linear-gradient(180deg, var(--bg), var(--bg-alt));
+    }
+
+    a{ color: inherit; }
+
+    /* HEADER */
+    header{
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(10px);
+      background: rgba(255,255,255,0.78);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .header-inner{
+      max-width: var(--max);
+      margin: auto;
+      padding: 12px 16px;
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .brand{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      text-decoration:none;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+      color: var(--text);
+      white-space: nowrap;
+    }
+
+    /* LOGO: solid dot + inner shadow + white P */
+    .logo{
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: var(--accent);
+      color: #fff;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      box-shadow:
+        inset 0 10px 18px rgba(255,255,255,0.22),
+        inset 0 -12px 18px rgba(0,0,0,0.22),
+        0 10px 18px rgba(37,99,235,0.25);
+    }
+
+    nav{
+      display: flex;
+      justify-content: center;
+      gap: 18px;
+    }
+
+    nav a{
+      color: var(--muted);
+      text-decoration: none;
+      font-weight: 700;
+      padding: 8px 10px;
+      border-radius: 12px;
+      transition: background 120ms ease, color 120ms ease;
+    }
+
+    nav a:hover{
+      background: rgba(16,24,40,0.04);
+      color: var(--text);
+    }
+
+    nav a.active{
+      background: rgba(37,99,235,0.12);
+      color: var(--text);
+      border: 1px solid rgba(37,99,235,0.22);
+    }
+
+    .actions{
+      display:flex;
+      gap: 10px;
+      align-items:center;
+    }
+
+    .btn{
+      border: 1px solid var(--line);
+      background: transparent;
+      color: var(--text);
+      padding: 10px 14px;
+      border-radius: 999px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: transform 120ms ease, background 120ms ease, border-color 120ms ease;
+    }
+    .btn:hover{ transform: translateY(-1px); }
+
+    .btn.primary{
+      background: var(--accent);
+      border-color: rgba(37,99,235,0.35);
+      color: #fff;
+      box-shadow: 0 10px 18px rgba(37,99,235,0.22);
+    }
+    .btn.primary:hover{
+      background: #1d4ed8;
+      border-color: rgba(29,78,216,0.45);
+    }
+
+    .icon-btn{
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.8);
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      transition: transform 120ms ease, background 120ms ease;
+      box-shadow: var(--shadow-soft);
+    }
+    .icon-btn:hover{
+      transform: translateY(-1px);
+      background: rgba(255,255,255,0.95);
+    }
+
+    .burger,
+    .burger:before,
+    .burger:after{
+      content:"";
+      width: 18px;
+      height: 2px;
+      background: var(--text);
+      border-radius: 2px;
+      display: block;
+      position: relative;
+      opacity: 0.9;
+    }
+    .burger:before{ top: -6px; position:absolute; }
+    .burger:after{ top: 6px; position:absolute; }
+
+    /* DROPDOWN */
+    .menu-wrap{ position: relative; }
+
+    .menu{
+      position: absolute;
+      top: calc(100% + 10px);
+      right: 0;
+      background: rgba(255,255,255,0.96);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      box-shadow: var(--shadow);
+      min-width: 240px;
+      padding: 8px;
+      display: none;
+    }
+
+    .menu.open{ display: block; }
+
+    .menu a{
+      display:block;
+      padding: 10px 12px;
+      border-radius: 10px;
+      color: var(--muted);
+      text-decoration: none;
+      font-weight: 750;
+      transition: background 120ms ease, color 120ms ease;
+    }
+
+    .menu a:hover{
+      background: rgba(37,99,235,0.10);
+      color: var(--text);
+    }
+
+    /* PAGE */
+    main{
+      max-width: var(--max);
+      margin:auto;
+      padding: 46px 16px 64px;
+      min-height: calc(100vh - 260px);
+    }
+
+    h1{
+      margin: 0 0 10px;
+      font-size: 48px;
+      letter-spacing: -0.03em;
+      line-height: 1.05;
+    }
+
+    .lead{
+      max-width: 70ch;
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.55;
+      margin: 0 0 22px;
+    }
+
+    .hero-card{
+      background: rgba(255,255,255,0.72);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 22px;
+      box-shadow: var(--shadow-soft);
+    }
+
+    /* POLITIK-SIDA */
+    .policy-grid{
+      margin-top: 16px;
+      display: grid;
+      grid-template-columns: 1fr 1.35fr;
+      gap: 16px;
+      align-items: start;
+    }
+
+    .card{
+      background: rgba(255,255,255,0.82);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .card-pad{ padding: 18px; }
+
+    .card-top{
+      display:flex;
+      align-items:center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 16px 16px 10px;
+      border-bottom: 1px solid rgba(16,24,40,0.08);
+    }
+
+    .card-top h2{
+      margin: 0;
+      font-size: 14px;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      color: rgba(16,24,40,0.70);
+    }
+
+    .clear-btn{
+      width: 38px;
+      height: 38px;
+      border-radius: 12px;
+      border: 1px solid rgba(16,24,40,0.10);
+      background: rgba(16,24,40,0.03);
+      cursor: pointer;
+      display:grid;
+      place-items:center;
+      font-size: 18px;
+      line-height: 1;
+      transition: transform 120ms ease, background 120ms ease, border-color 120ms ease;
+      color: rgba(16,24,40,0.8);
+    }
+    .clear-btn:hover{
+      transform: translateY(-1px);
+      background: rgba(37,99,235,0.08);
+      border-color: rgba(37,99,235,0.22);
+    }
+
+    .picker-list{
+      max-height: 320px; /* scrollrutan */
+      overflow: auto;
+      padding: 10px 10px 12px;
+    }
+
+    .topic-item{
+      display:flex;
+      gap: 10px;
+      align-items: center;
+      padding: 10px 10px;
+      border-radius: 14px;
+      cursor: pointer;
+      transition: background 120ms ease, border-color 120ms ease;
+      border: 1px solid transparent;
+      user-select: none;
+    }
+
+    .topic-item:hover{
+      background: rgba(16,24,40,0.03);
+    }
+
+    .topic-item.active{
+      background: rgba(37,99,235,0.10);
+      border-color: rgba(37,99,235,0.22);
+    }
+
+    .topic-item input{
+      width: 16px;
+      height: 16px;
+      accent-color: var(--accent);
+      margin: 0;
+    }
+
+    .topic-label{
+      font-weight: 800;
+      color: rgba(16,24,40,0.92);
+    }
+
+    .topic-hint{
+      display:block;
+      font-weight: 650;
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    .content-title{
+      margin: 0;
+      font-size: 26px;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+    }
+
+    .content-sub{
+      margin: 8px 0 0;
+      color: var(--muted);
+      line-height: 1.55;
+      font-weight: 650;
+      max-width: 72ch;
+    }
+
+    .pill-row{
+      display:flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap: 8px;
+      padding: 8px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(37,99,235,0.18);
+      background: rgba(37,99,235,0.08);
+      color: rgba(16,24,40,0.86);
+      font-weight: 800;
+      font-size: 13px;
+    }
+
+    .bullets{
+      margin: 16px 0 0;
+      padding-left: 18px;
+      color: rgba(16,24,40,0.86);
+      line-height: 1.65;
+      font-weight: 650;
+    }
+
+    .bullets li{ margin: 8px 0; }
+
+    .content-footer{
+      margin-top: 16px;
+      padding-top: 14px;
+      border-top: 1px solid rgba(16,24,40,0.08);
+      display:flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items:center;
+      justify-content: space-between;
+    }
+
+    .small-note{
+      color: rgba(16,24,40,0.65);
+      font-weight: 650;
+      font-size: 13px;
+      max-width: 72ch;
+    }
+
+    /* MODAL */
+    .backdrop{
+      position: fixed;
+      inset: 0;
+      background: rgba(16,24,40,0.45);
+      display: none;
+      z-index: 80;
+    }
+
+    .modal{
+      position: fixed;
+      inset: 0;
+      display: none;
+      place-items: center;
+      z-index: 90;
+      padding: 16px;
+    }
+
+    .modal-card{
+      width: min(640px, 100%);
+      background: rgba(255,255,255,0.98);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 20px;
+      box-shadow: var(--shadow);
+    }
+
+    .modal.open,
+    .backdrop.open{
+      display: grid;
+    }
+
+    .modal-top{
+      display:flex;
+      align-items:center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+
+    .modal-top h2{
+      margin: 0;
+      letter-spacing: -0.02em;
+    }
+
+    .modal-sub{
+      margin: 0 0 14px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    label{
+      display:block;
+      margin-bottom: 10px;
+      font-weight: 800;
+      font-size: 13px;
+      color: rgba(16,24,40,0.9);
+    }
+
+    input, textarea{
+      width: 100%;
+      padding: 10px 12px;
+      border-radius: 12px;
+      border: 1px solid rgba(16,24,40,0.16);
+      background: rgba(16,24,40,0.03);
+      color: var(--text);
+      outline: none;
+    }
+
+    input:focus, textarea:focus{
+      border-color: rgba(37,99,235,0.45);
+      box-shadow: 0 0 0 4px rgba(37,99,235,0.10);
+      background: rgba(37,99,235,0.04);
+    }
+
+    #status{
+      margin: 10px 0 0;
+      color: var(--muted);
+      font-weight: 650;
+      min-height: 1.2em;
+    }
+
+    /* FOOTER */
+    footer{
+      border-top: 1px solid var(--line);
+      background: rgba(255,255,255,0.75);
+      backdrop-filter: blur(10px);
+    }
+
+    .footer-inner{
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 26px 16px;
+      display: grid;
+      grid-template-columns: 1.2fr 1fr 1fr;
+      gap: 18px;
+      align-items: start;
+    }
+
+    .footer-brand{
+      display:flex;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .footer-title{
+      font-weight: 900;
+      letter-spacing: -0.01em;
+      margin: 0;
+    }
+
+    .footer-muted{
+      margin: 6px 0 0;
+      color: var(--muted);
+      line-height: 1.5;
+      max-width: 42ch;
+      font-weight: 600;
+    }
+
+    .footer-col h4{
+      margin: 6px 0 10px;
+      font-size: 13px;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      color: rgba(16,24,40,0.7);
+    }
+
+    .footer-links{
+      display: grid;
+      gap: 8px;
+    }
+
+    .footer-links a{
+      color: var(--muted);
+      text-decoration: none;
+      font-weight: 700;
+      padding: 6px 8px;
+      border-radius: 10px;
+      width: fit-content;
+      transition: background 120ms ease, color 120ms ease;
+    }
+
+    .footer-links a:hover{
+      background: rgba(37,99,235,0.10);
+      color: var(--text);
+    }
+
+    .footer-bottom{
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 14px 16px 22px;
+      display:flex;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      color: rgba(16,24,40,0.65);
+      font-weight: 650;
+      border-top: 1px solid rgba(16,24,40,0.08);
+    }
+
+    /* Responsive */
+    @media(max-width: 980px){
+      .policy-grid{ grid-template-columns: 1fr; }
+      .picker-list{ max-height: 280px; }
+    }
+
+    @media(max-width: 880px){
+      nav{ display: none; }
+      h1{ font-size: 40px; }
+      .footer-inner{ grid-template-columns: 1fr; }
+    }
+
+    @media(max-width: 460px){
+      .brand span.brand-text { display: none; }
+      h1{ font-size: 36px; }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="/" class="brand" aria-label="Punktpartiet – startsida">
+      <div class="logo" aria-hidden="true">P</div>
+      <span class="brand-text">Punktpartiet</span>
+    </a>
+
+    <nav aria-label="Huvudmeny">
+      <a class="active" href="/politik/">Vår politik</a>
+      <a href="/politiker/">Våra politiker</a>
+      <a href="/engagera/">Engagera dig</a>
+    </nav>
+
+    <div class="actions">
+      <button class="btn primary" id="openMember" type="button">Bli medlem</button>
+
+      <div class="menu-wrap">
+        <button class="icon-btn" id="menuBtn" aria-label="Öppna meny" aria-expanded="false" type="button">
+          <span class="burger" aria-hidden="true"></span>
+        </button>
+
+        <div class="menu" id="menu" role="menu" aria-label="Fler länkar">
+          <a href="/nyheter/" role="menuitem">Nyheter</a>
+          <a href="/press/" role="menuitem">Press</a>
+          <a href="/kontakt/" role="menuitem">Kontakt</a>
+          <a href="/integritet/" role="menuitem">Integritetspolicy</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main>
+  <div class="hero-card">
+    <h1>Vår politik</h1>
+    <p class="lead">
+      Välj ett område och se vad Punktpartiet vill uppnå. Här hittar du våra prioriteringar,
+      mål och konkreta förslag – tydligt, sakligt och resultatinriktat.
+    </p>
+    <button class="btn primary" id="openMember2" type="button">Bli medlem</button>
+  </div>
+
+  <section class="policy-grid" aria-label="Politikområde och innehåll">
+    <!-- PICKER -->
+    <div class="card" aria-label="Välj ämne">
+      <div class="card-top">
+        <h2>Välj hjärtefråga</h2>
+        <button class="clear-btn" id="clearTopic" type="button" aria-label="Rensa val">✕</button>
+      </div>
+      <div class="picker-list" id="topicList" role="radiogroup" aria-label="Ämneslista">
+        <!-- JS renderar listan -->
+      </div>
+    </div>
+
+    <!-- CONTENT -->
+    <div class="card card-pad" aria-label="Innehåll">
+      <h2 class="content-title" id="contentTitle">Välj ett ämne</h2>
+      <p class="content-sub" id="contentSub">
+        Klicka på ett område till vänster så visas våra mål och förslag här.
+      </p>
+
+      <div class="pill-row" id="pillRow" aria-label="Nyckelord" style="display:none;"></div>
+
+      <ul class="bullets" id="contentBullets" style="display:none;"></ul>
+
+      <div class="content-footer">
+        <p class="small-note" id="contentNote">
+          (Texten här är enkel att uppdatera. Säg till när du vill fylla på med exakta formuleringar per område.)
+        </p>
+        <button class="btn" type="button" id="copyLinkBtn" aria-label="Kopiera länk till valt ämne">Kopiera länk</button>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- MODAL -->
+<div class="backdrop" id="backdrop"></div>
+
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-label="Bli medlem">
+  <div class="modal-card">
+    <div class="modal-top">
+      <h2>Bli medlem</h2>
+      <button class="icon-btn" id="closeX" type="button" aria-label="Stäng">✕</button>
+    </div>
+    <p class="modal-sub">Fyll i formuläret så kontaktar vi dig. (Skickas via Resend.)</p>
+
+    <form id="memberForm">
+      <label>Förnamn
+        <input name="firstName" required>
+      </label>
+
+      <label>Efternamn
+        <input name="lastName" required>
+      </label>
+
+      <label>E-post
+        <input type="email" name="email" required>
+      </label>
+
+      <label>Telefon (valfritt)
+        <input name="phone" autocomplete="tel">
+      </label>
+
+      <label>Meddelande (valfritt)
+        <textarea name="message" rows="4"></textarea>
+      </label>
+
+      <button class="btn primary" type="submit">Skicka</button>
+      <button class="btn" type="button" id="closeMember">Avbryt</button>
+
+      <p id="status" aria-live="polite"></p>
+    </form>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-brand">
+        <div class="logo" aria-hidden="true">P</div>
+        <div>
+          <p class="footer-title">Punktpartiet</p>
+          <p class="footer-muted">Sakligt. Ansvarsfullt. Resultatinriktat.</p>
+        </div>
+      </div>
+      <p class="footer-muted">
+        Vill du engagera dig? Bli medlem eller kontakta oss – vi återkommer så snabbt vi kan.
+      </p>
+    </div>
+
+    <div class="footer-col">
+      <h4>Huvud</h4>
+      <div class="footer-links">
+        <a href="/politik/">Vår politik</a>
+        <a href="/politiker/">Våra politiker</a>
+        <a href="/engagera/">Engagera dig</a>
+      </div>
+    </div>
+
+    <div class="footer-col">
+      <h4>Mer</h4>
+      <div class="footer-links">
+        <a href="/nyheter/">Nyheter</a>
+        <a href="/press/">Press</a>
+        <a href="/kontakt/">Kontakt</a>
+        <a href="/integritet/">Integritetspolicy</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <span>© <span id="year"></span> Punktpartiet</span>
+  </div>
+</footer>
+
+<script>
+  // ========= DROPDOWN =========
+  const menuBtn = document.getElementById("menuBtn");
+  const menu = document.getElementById("menu");
+
+  function closeMenu(){
+    menu.classList.remove("open");
+    menuBtn?.setAttribute("aria-expanded", "false");
+  }
+
+  menuBtn.onclick = (e) => {
+    e.stopPropagation();
+    menu.classList.toggle("open");
+    menuBtn.setAttribute("aria-expanded", menu.classList.contains("open") ? "true" : "false");
+  };
+
+  document.addEventListener("click", () => closeMenu());
+  document.addEventListener("keydown", (e) => { if(e.key === "Escape") closeMenu(); });
+
+  // ========= MODAL =========
+  const modal = document.getElementById("modal");
+  const backdrop = document.getElementById("backdrop");
+  const openBtn = document.getElementById("openMember");
+  const openBtn2 = document.getElementById("openMember2");
+  const closeBtn = document.getElementById("closeMember");
+  const closeX = document.getElementById("closeX");
+
+  function openModal(){
+    modal.classList.add("open");
+    backdrop.classList.add("open");
+    closeMenu();
+  }
+  function closeModal(){
+    modal.classList.remove("open");
+    backdrop.classList.remove("open");
+    const status = document.getElementById("status");
+    if(status) status.textContent = "";
+  }
+
+  openBtn.onclick = openModal;
+  openBtn2.onclick = openModal;
+  closeBtn.onclick = closeModal;
+  closeX.onclick = closeModal;
+  backdrop.onclick = closeModal;
+
+  document.addEventListener("keydown", (e) => {
+    if(e.key === "Escape") closeModal();
+  });
+
+  // ========= FOOTER YEAR =========
+  document.getElementById("year").textContent = new Date().getFullYear();
+
+  // ========= FORM SUBMIT (Resend via Worker) =========
+  const form = document.getElementById("memberForm");
+  const status = document.getElementById("status");
+
+  form.onsubmit = async (e) => {
+    e.preventDefault();
+    status.textContent = "Skickar…";
+
+    const data = Object.fromEntries(new FormData(form));
+
+    try {
+      const res = await fetch("https://api.punktpartiet.se/member", {
+        method:"POST",
+        headers:{ "Content-Type":"application/json" },
+        body:JSON.stringify(data)
+      });
+
+      if(res.ok){
+        status.textContent = "Tack! Vi hör av oss.";
+        form.reset();
+        setTimeout(closeModal, 850);
+      }else{
+        status.textContent = "Något gick fel.";
+      }
+    } catch {
+      status.textContent = "Nätverksfel.";
+    }
+  };
+
+  // ========= POLITIK: TOPICS =========
+  const topics = [
+    {
+      id: "ekonomi-jobb",
+      title: "Ekonomi & jobb",
+      sub: "En ekonomi som gynnar arbete, företagande och långsiktiga investeringar.",
+      pills: ["Arbete", "Företagande", "Tillväxt"],
+      bullets: [
+        "Sänka trösklarna till arbetsmarknaden och stärka drivkrafter att arbeta.",
+        "Förenkla regelverk för små och medelstora företag.",
+        "Prioritera effektivt användande av skattemedel och tydliga resultatmål.",
+        "Stärka konkurrenskraften genom innovation och kompetens."
+      ]
+    },
+    {
+      id: "trygghet-brott",
+      title: "Trygghet & brott",
+      sub: "Ett samhälle där lagar gäller – och där människor känner sig trygga i vardagen.",
+      pills: ["Trygghet", "Rättsstat", "Förebyggande"],
+      bullets: [
+        "Fler synliga resurser där problemen är som störst.",
+        "Skärpa verktyg mot återfallsbrottslighet och grov kriminalitet.",
+        "Tidiga insatser för barn och unga i riskzon – med tydligt ansvar.",
+        "Stärka brottsoffers ställning och stöd."
+      ]
+    },
+    {
+      id: "skola",
+      title: "Skola",
+      sub: "Kunskap, studiero och höga förväntningar – för att alla ska få en bra start.",
+      pills: ["Kunskap", "Studiero", "Resultat"],
+      bullets: [
+        "Ökat fokus på basfärdigheter och tydlig progression i undervisningen.",
+        "Stärka läraryrket genom bättre stöd och mer tid till kärnuppdraget.",
+        "Säkerställa studiero och tydliga konsekvenser vid stök.",
+        "Följ upp skolresultat öppet och åtgärda brister snabbt."
+      ]
+    },
+    {
+      id: "vard",
+      title: "Vård",
+      sub: "Tillgänglig vård med kvalitet – och kortare väntetider.",
+      pills: ["Tillgänglighet", "Kvalitet", "Köer"],
+      bullets: [
+        "Minska vårdköer genom uppföljning, kapacitet och smartare flöden.",
+        "Stärka primärvården och kontinuitet för patienter.",
+        "Mer fokus på resultat och patientsäkerhet i hela systemet.",
+        "Bättre villkor som gör att vårdpersonal vill stanna och utvecklas."
+      ]
+    },
+    {
+      id: "energi",
+      title: "Energi",
+      sub: "Stabil elförsörjning som möjliggör industri, jobb och rimliga elpriser.",
+      pills: ["Stabilitet", "Priser", "Industrin"],
+      bullets: [
+        "Bygga ett robust energisystem som levererar när det behövs.",
+        "Förenkla processer som bromsar nya investeringar i elproduktion och nät.",
+        "Skapa långsiktiga spelregler för energimarknaden.",
+        "Säkerställa att Sveriges konkurrenskraft stärks av energipolitiken."
+      ]
+    },
+    {
+      id: "bostader",
+      title: "Bostäder",
+      sub: "Fler bostäder genom enklare regler, snabbare processer och bättre fungerande marknad.",
+      pills: ["Bygg", "Regelförenkling", "Tillgång"],
+      bullets: [
+        "Kortare ledtider i plan- och byggprocesser.",
+        "Förenkla regelverk som driver kostnader i onödan.",
+        "Öka rörligheten så fler kan hitta en bostad som passar.",
+        "Stärka möjligheten att bygga där människor vill bo."
+      ]
+    },
+    {
+      id: "demokrati-rattsstat",
+      title: "Demokrati & rättsstat",
+      sub: "Starka institutioner, transparens och en förvaltning som fungerar effektivt.",
+      pills: ["Transparens", "Ansvar", "Förvaltning"],
+      bullets: [
+        "Värna oberoende institutioner och rättssäkerhet.",
+        "Öka transparensen i beslutsfattande och uppföljning av mål.",
+        "Minska onödig byråkrati – öka fokus på kärnuppdrag och resultat.",
+        "Tydligare ansvar i offentliga system och snabbare förbättringsarbete."
+      ]
+    },
+    {
+      id: "migration-integration",
+      title: "Migration & integration",
+      sub: "Ordning och reda – och en integration som fungerar i praktiken.",
+      pills: ["Ordning", "Språk", "Arbete"],
+      bullets: [
+        "Tydliga krav och förväntningar för att bli en del av samhället.",
+        "Fokus på språket som nyckel till jobb och gemenskap.",
+        "Starka drivkrafter till arbete och egenförsörjning.",
+        "Insatser mot parallellsamhällen och hedersrelaterat förtryck."
+      ]
+    },
+    {
+      id: "infrastruktur",
+      title: "Infrastruktur",
+      sub: "Fungerande transporter och digital infrastruktur – för jobb, tillväxt och vardag.",
+      pills: ["Transport", "Underhåll", "Tillväxt"],
+      bullets: [
+        "Prioritera underhåll och framkomlighet där behoven är störst.",
+        "Öka punktlighet och kapacitet i viktiga stråk.",
+        "Snabbare planering och bättre upphandlingar.",
+        "Stärka digital infrastruktur som möjliggör arbete och service i hela landet."
+      ]
+    }
+  ];
+
+  const topicList = document.getElementById("topicList");
+  const clearTopic = document.getElementById("clearTopic");
+
+  const contentTitle = document.getElementById("contentTitle");
+  const contentSub = document.getElementById("contentSub");
+  const pillRow = document.getElementById("pillRow");
+  const contentBullets = document.getElementById("contentBullets");
+  const contentNote = document.getElementById("contentNote");
+  const copyLinkBtn = document.getElementById("copyLinkBtn");
+
+  let selectedId = null;
+
+  function renderList(){
+    topicList.innerHTML = "";
+
+    topics.forEach(t => {
+      const row = document.createElement("label");
+      row.className = "topic-item";
+      row.setAttribute("data-id", t.id);
+
+      const radio = document.createElement("input");
+      radio.type = "radio";
+      radio.name = "topic";
+      radio.value = t.id;
+      radio.setAttribute("aria-label", t.title);
+
+      const textWrap = document.createElement("div");
+
+      const title = document.createElement("div");
+      title.className = "topic-label";
+      title.textContent = t.title;
+
+      const hint = document.createElement("span");
+      hint.className = "topic-hint";
+      hint.textContent = t.sub;
+
+      textWrap.appendChild(title);
+      textWrap.appendChild(hint);
+
+      row.appendChild(radio);
+      row.appendChild(textWrap);
+
+      row.addEventListener("click", (e) => {
+        // så klick på hela raden funkar
+        e.preventDefault();
+        setTopic(t.id, true);
+      });
+
+      topicList.appendChild(row);
+    });
+  }
+
+  function setActiveRow(){
+    const rows = topicList.querySelectorAll(".topic-item");
+    rows.forEach(r => {
+      const id = r.getAttribute("data-id");
+      const input = r.querySelector("input");
+      const isActive = id === selectedId;
+      r.classList.toggle("active", isActive);
+      if (input) input.checked = isActive;
+    });
+  }
+
+  function renderContent(){
+    if(!selectedId){
+      contentTitle.textContent = "Välj ett ämne";
+      contentSub.textContent = "Klicka på ett område till vänster så visas våra mål och förslag här.";
+      pillRow.style.display = "none";
+      pillRow.innerHTML = "";
+      contentBullets.style.display = "none";
+      contentBullets.innerHTML = "";
+      contentNote.textContent = "(Texten här är enkel att uppdatera. Säg till när du vill fylla på med exakta formuleringar per område.)";
+      return;
+    }
+
+    const t = topics.find(x => x.id === selectedId);
+    if(!t) return;
+
+    contentTitle.textContent = t.title;
+    contentSub.textContent = t.sub;
+
+    // pills
+    pillRow.innerHTML = "";
+    if (t.pills && t.pills.length){
+      t.pills.forEach(p => {
+        const pill = document.createElement("span");
+        pill.className = "pill";
+        pill.textContent = p;
+        pillRow.appendChild(pill);
+      });
+      pillRow.style.display = "flex";
+    } else {
+      pillRow.style.display = "none";
+    }
+
+    // bullets
+    contentBullets.innerHTML = "";
+    if (t.bullets && t.bullets.length){
+      t.bullets.forEach(b => {
+        const li = document.createElement("li");
+        li.textContent = b;
+        contentBullets.appendChild(li);
+      });
+      contentBullets.style.display = "block";
+    } else {
+      contentBullets.style.display = "none";
+    }
+
+    contentNote.textContent = "Tips: Dela gärna länken till just det här området (kopiera-länk-knappen).";
+  }
+
+  function setTopic(id, updateHash){
+    selectedId = id;
+    setActiveRow();
+    renderContent();
+
+    if(updateHash){
+      history.replaceState(null, "", "#" + encodeURIComponent(id));
+    }
+  }
+
+  function clearSelection(){
+    selectedId = null;
+    setActiveRow();
+    renderContent();
+    history.replaceState(null, "", window.location.pathname + window.location.search);
+  }
+
+  clearTopic.addEventListener("click", () => clearSelection());
+
+  // Copy link to selected topic
+  copyLinkBtn.addEventListener("click", async () => {
+    const url = new URL(window.location.href);
+    if(selectedId) url.hash = selectedId;
+    else url.hash = "";
+    try{
+      await navigator.clipboard.writeText(url.toString());
+      copyLinkBtn.textContent = "Kopierad ✓";
+      setTimeout(() => (copyLinkBtn.textContent = "Kopiera länk"), 900);
+    }catch{
+      // fallback
+      const tmp = document.createElement("input");
+      tmp.value = url.toString();
+      document.body.appendChild(tmp);
+      tmp.select();
+      document.execCommand("copy");
+      tmp.remove();
+      copyLinkBtn.textContent = "Kopierad ✓";
+      setTimeout(() => (copyLinkBtn.textContent = "Kopiera länk"), 900);
+    }
+  });
+
+  // Initial render + hash support
+  renderList();
+
+  function applyHashIfAny(){
+    const raw = (window.location.hash || "").replace("#", "").trim();
+    if(!raw) { clearSelection(); return; }
+    const id = decodeURIComponent(raw);
+    const exists = topics.some(t => t.id === id);
+    if(exists) setTopic(id, false);
+    else clearSelection();
+  }
+
+  window.addEventListener("hashchange", applyHashIfAny);
+  applyHashIfAny();
+</script>
+
+</body>
+</html>
+```
