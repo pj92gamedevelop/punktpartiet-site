@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="sv">
 <head>
@@ -577,7 +576,7 @@
   <div class="hero-card">
     <h1>Vår politik</h1>
     <p class="lead">
-      Välj en hjärtefråga och läs mer. Varje val öppnar en egen artikel i en ny flik.
+      Välj en hjärtefråga och läs mer. Varje val öppnar en egen politisk punkt i en ny flik.
     </p>
     <button class="btn primary" id="openMember2" type="button">Bli medlem</button>
   </div>
@@ -757,7 +756,7 @@
     }
   };
 
-  // ========= POLITIK: TOPICS (Öppna artikel i ny flik) =========
+  // ========= POLITIK: TOPICS (Öppna punkt i ny flik) =========
   // ✅ Sätt "url" till var artikeln ska ligga.
   // Exempel: /politik/ekonomi-jobb.html (eller vad du vill)
   const topics = [
@@ -828,7 +827,7 @@
       a.href = t.url;
       a.target = "_blank";
       a.rel = "noopener";
-      a.setAttribute("aria-label", `${t.title} – öppna artikel i ny flik`);
+      a.setAttribute("aria-label", `${t.title} – öppna politisk punkt i ny flik`);
 
       const icon = document.createElement("div");
       icon.className = "topic-icon";
@@ -849,7 +848,7 @@
 
       const meta = document.createElement("div");
       meta.className = "topic-meta";
-      meta.innerHTML = `<span>Artikel</span><span class="ext">↗</span>`;
+      meta.innerHTML = `<span> </span><span class="ext">↗</span>`;
 
       a.appendChild(icon);
       a.appendChild(textWrap);
