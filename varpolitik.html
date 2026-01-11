@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="sv">
 <head>
@@ -35,7 +36,7 @@
 
     body{
       margin:0;
-      font-family: system-ui, -apple-system_toggle, Segoe UI, Roboto, Arial;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial;
       color: var(--text);
       background:
         radial-gradient(1100px 750px at 20% 0%, rgba(37,99,235,0.10), transparent 60%),
@@ -248,7 +249,7 @@
     .policy-grid{
       margin-top: 16px;
       display: grid;
-      grid-template-columns: 1fr 1.35fr;
+      grid-template-columns: 1fr; /* ✅ bara en ruta nu */
       gap: 16px;
       align-items: start;
     }
@@ -258,9 +259,8 @@
       border: 1px solid var(--line);
       border-radius: var(--radius);
       box-shadow: var(--shadow-soft);
+      overflow: hidden;
     }
-
-    .card-pad{ padding: 18px; }
 
     .card-top{
       display:flex;
@@ -279,63 +279,55 @@
       color: rgba(16,24,40,0.70);
     }
 
-    .clear-btn{
-      width: 38px;
-      height: 38px;
-      border-radius: 12px;
-      border: 1px solid rgba(16,24,40,0.10);
-      background: rgba(16,24,40,0.03);
-      cursor: pointer;
-      display:grid;
-      place-items:center;
-      font-size: 18px;
-      line-height: 1;
-      transition: transform 120ms ease, background 120ms ease, border-color 120ms ease;
-      color: rgba(16,24,40,0.8);
-    }
-    .clear-btn:hover{
-      transform: translateY(-1px);
-      background: rgba(37,99,235,0.08);
-      border-color: rgba(37,99,235,0.22);
-    }
-
     .picker-list{
-      max-height: 320px; /* scrollrutan */
+      max-height: 520px; /* lite större scrollruta */
       overflow: auto;
       padding: 10px 10px 12px;
     }
 
-    .topic-item{
+    /* ✅ Varje rad är en länk som öppnar i ny flik */
+    .topic-link{
       display:flex;
-      gap: 10px;
-      align-items: center;
-      padding: 10px 10px;
-      border-radius: 14px;
-      cursor: pointer;
-      transition: background 120ms ease, border-color 120ms ease;
+      gap: 12px;
+      align-items: flex-start;
+      padding: 12px 12px;
+      border-radius: 16px;
+      text-decoration: none;
+      transition: background 120ms ease, border-color 120ms ease, transform 120ms ease;
       border: 1px solid transparent;
-      user-select: none;
     }
 
-    .topic-item:hover{
+    .topic-link:hover{
       background: rgba(16,24,40,0.03);
+      border-color: rgba(16,24,40,0.08);
+      transform: translateY(-1px);
     }
 
-    .topic-item.active{
+    .topic-link:focus{
+      outline: none;
+      box-shadow: 0 0 0 4px rgba(37,99,235,0.12);
+      border-color: rgba(37,99,235,0.28);
+      background: rgba(37,99,235,0.05);
+    }
+
+    .topic-icon{
+      width: 34px;
+      height: 34px;
+      border-radius: 12px;
+      display:grid;
+      place-items:center;
       background: rgba(37,99,235,0.10);
-      border-color: rgba(37,99,235,0.22);
-    }
-
-    .topic-item input{
-      width: 16px;
-      height: 16px;
-      accent-color: var(--accent);
-      margin: 0;
+      border: 1px solid rgba(37,99,235,0.18);
+      color: rgba(16,24,40,0.80);
+      font-size: 16px;
+      flex: 0 0 auto;
+      margin-top: 1px;
     }
 
     .topic-label{
-      font-weight: 800;
+      font-weight: 900;
       color: rgba(16,24,40,0.92);
+      line-height: 1.15;
     }
 
     .topic-hint{
@@ -343,70 +335,32 @@
       font-weight: 650;
       font-size: 13px;
       color: var(--muted);
-      margin-top: 2px;
+      margin-top: 4px;
+      line-height: 1.45;
     }
 
-    .content-title{
-      margin: 0;
-      font-size: 26px;
-      letter-spacing: -0.02em;
-      line-height: 1.15;
-    }
-
-    .content-sub{
-      margin: 8px 0 0;
-      color: var(--muted);
-      line-height: 1.55;
-      font-weight: 650;
-      max-width: 72ch;
-    }
-
-    .pill-row{
+    .topic-meta{
+      margin-left: auto;
       display:flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 14px;
-    }
-
-    .pill{
-      display:inline-flex;
       align-items:center;
       gap: 8px;
-      padding: 8px 10px;
-      border-radius: 999px;
-      border: 1px solid rgba(37,99,235,0.18);
-      background: rgba(37,99,235,0.08);
-      color: rgba(16,24,40,0.86);
+      color: rgba(16,24,40,0.55);
       font-weight: 800;
-      font-size: 13px;
+      font-size: 12px;
+      flex: 0 0 auto;
+      padding-top: 6px;
     }
 
-    .bullets{
-      margin: 16px 0 0;
-      padding-left: 18px;
-      color: rgba(16,24,40,0.86);
-      line-height: 1.65;
-      font-weight: 650;
-    }
-
-    .bullets li{ margin: 8px 0; }
-
-    .content-footer{
-      margin-top: 16px;
-      padding-top: 14px;
-      border-top: 1px solid rgba(16,24,40,0.08);
-      display:flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      align-items:center;
-      justify-content: space-between;
-    }
-
-    .small-note{
-      color: rgba(16,24,40,0.65);
-      font-weight: 650;
-      font-size: 13px;
-      max-width: 72ch;
+    .ext{
+      width: 26px;
+      height: 26px;
+      border-radius: 10px;
+      display:grid;
+      place-items:center;
+      background: rgba(16,24,40,0.03);
+      border: 1px solid rgba(16,24,40,0.08);
+      font-size: 14px;
+      line-height: 1;
     }
 
     /* MODAL */
@@ -571,15 +525,11 @@
     }
 
     /* Responsive */
-    @media(max-width: 980px){
-      .policy-grid{ grid-template-columns: 1fr; }
-      .picker-list{ max-height: 280px; }
-    }
-
     @media(max-width: 880px){
       nav{ display: none; }
       h1{ font-size: 40px; }
       .footer-inner{ grid-template-columns: 1fr; }
+      .topic-meta{ display:none; }
     }
 
     @media(max-width: 460px){
@@ -627,40 +577,20 @@
   <div class="hero-card">
     <h1>Vår politik</h1>
     <p class="lead">
-      Välj ett område och se vad Punktpartiet vill uppnå. Här hittar du våra prioriteringar,
-      mål och konkreta förslag – tydligt, sakligt och resultatinriktat.
+      Välj en hjärtefråga och läs mer. Varje val öppnar en egen artikel i en ny flik.
     </p>
     <button class="btn primary" id="openMember2" type="button">Bli medlem</button>
   </div>
 
-  <section class="policy-grid" aria-label="Politikområde och innehåll">
-    <!-- PICKER -->
-    <div class="card" aria-label="Välj ämne">
+  <section class="policy-grid" aria-label="Hjärtefrågor">
+    <!-- ✅ Endast EN box: Välj hjärtefråga (bred) -->
+    <div class="card" aria-label="Välj hjärtefråga">
       <div class="card-top">
         <h2>Välj hjärtefråga</h2>
-        <button class="clear-btn" id="clearTopic" type="button" aria-label="Rensa val">✕</button>
       </div>
-      <div class="picker-list" id="topicList" role="radiogroup" aria-label="Ämneslista">
+
+      <div class="picker-list" id="topicList" aria-label="Lista med hjärtefrågor">
         <!-- JS renderar listan -->
-      </div>
-    </div>
-
-    <!-- CONTENT -->
-    <div class="card card-pad" aria-label="Innehåll">
-      <h2 class="content-title" id="contentTitle">Välj ett ämne</h2>
-      <p class="content-sub" id="contentSub">
-        Klicka på ett område till vänster så visas våra mål och förslag här.
-      </p>
-
-      <div class="pill-row" id="pillRow" aria-label="Nyckelord" style="display:none;"></div>
-
-      <ul class="bullets" id="contentBullets" style="display:none;"></ul>
-
-      <div class="content-footer">
-        <p class="small-note" id="contentNote">
-          (Texten här är enkel att uppdatera. Säg till när du vill fylla på med exakta formuleringar per område.)
-        </p>
-        <button class="btn" type="button" id="copyLinkBtn" aria-label="Kopiera länk till valt ämne">Kopiera länk</button>
       </div>
     </div>
   </section>
@@ -827,143 +757,82 @@
     }
   };
 
-  // ========= POLITIK: TOPICS =========
+  // ========= POLITIK: TOPICS (Öppna artikel i ny flik) =========
+  // ✅ Sätt "url" till var artikeln ska ligga.
+  // Exempel: /politik/ekonomi-jobb.html (eller vad du vill)
   const topics = [
     {
       id: "ekonomi-jobb",
       title: "Ekonomi & jobb",
       sub: "En ekonomi som gynnar arbete, företagande och långsiktiga investeringar.",
-      pills: ["Arbete", "Företagande", "Tillväxt"],
-      bullets: [
-        "Sänka trösklarna till arbetsmarknaden och stärka drivkrafter att arbeta.",
-        "Förenkla regelverk för små och medelstora företag.",
-        "Prioritera effektivt användande av skattemedel och tydliga resultatmål.",
-        "Stärka konkurrenskraften genom innovation och kompetens."
-      ]
+      url: "/politik/ekonomi-jobb.html"
     },
     {
       id: "trygghet-brott",
       title: "Trygghet & brott",
       sub: "Ett samhälle där lagar gäller – och där människor känner sig trygga i vardagen.",
-      pills: ["Trygghet", "Rättsstat", "Förebyggande"],
-      bullets: [
-        "Fler synliga resurser där problemen är som störst.",
-        "Skärpa verktyg mot återfallsbrottslighet och grov kriminalitet.",
-        "Tidiga insatser för barn och unga i riskzon – med tydligt ansvar.",
-        "Stärka brottsoffers ställning och stöd."
-      ]
+      url: "/politik/trygghet-brott.html"
     },
     {
       id: "skola",
       title: "Skola",
       sub: "Kunskap, studiero och höga förväntningar – för att alla ska få en bra start.",
-      pills: ["Kunskap", "Studiero", "Resultat"],
-      bullets: [
-        "Ökat fokus på basfärdigheter och tydlig progression i undervisningen.",
-        "Stärka läraryrket genom bättre stöd och mer tid till kärnuppdraget.",
-        "Säkerställa studiero och tydliga konsekvenser vid stök.",
-        "Följ upp skolresultat öppet och åtgärda brister snabbt."
-      ]
+      url: "/politik/skola.html"
     },
     {
       id: "vard",
       title: "Vård",
       sub: "Tillgänglig vård med kvalitet – och kortare väntetider.",
-      pills: ["Tillgänglighet", "Kvalitet", "Köer"],
-      bullets: [
-        "Minska vårdköer genom uppföljning, kapacitet och smartare flöden.",
-        "Stärka primärvården och kontinuitet för patienter.",
-        "Mer fokus på resultat och patientsäkerhet i hela systemet.",
-        "Bättre villkor som gör att vårdpersonal vill stanna och utvecklas."
-      ]
+      url: "/politik/vard.html"
     },
     {
       id: "energi",
       title: "Energi",
       sub: "Stabil elförsörjning som möjliggör industri, jobb och rimliga elpriser.",
-      pills: ["Stabilitet", "Priser", "Industrin"],
-      bullets: [
-        "Bygga ett robust energisystem som levererar när det behövs.",
-        "Förenkla processer som bromsar nya investeringar i elproduktion och nät.",
-        "Skapa långsiktiga spelregler för energimarknaden.",
-        "Säkerställa att Sveriges konkurrenskraft stärks av energipolitiken."
-      ]
+      url: "/politik/energi.html"
     },
     {
       id: "bostader",
       title: "Bostäder",
       sub: "Fler bostäder genom enklare regler, snabbare processer och bättre fungerande marknad.",
-      pills: ["Bygg", "Regelförenkling", "Tillgång"],
-      bullets: [
-        "Kortare ledtider i plan- och byggprocesser.",
-        "Förenkla regelverk som driver kostnader i onödan.",
-        "Öka rörligheten så fler kan hitta en bostad som passar.",
-        "Stärka möjligheten att bygga där människor vill bo."
-      ]
+      url: "/politik/bostader.html"
     },
     {
       id: "demokrati-rattsstat",
       title: "Demokrati & rättsstat",
       sub: "Starka institutioner, transparens och en förvaltning som fungerar effektivt.",
-      pills: ["Transparens", "Ansvar", "Förvaltning"],
-      bullets: [
-        "Värna oberoende institutioner och rättssäkerhet.",
-        "Öka transparensen i beslutsfattande och uppföljning av mål.",
-        "Minska onödig byråkrati – öka fokus på kärnuppdrag och resultat.",
-        "Tydligare ansvar i offentliga system och snabbare förbättringsarbete."
-      ]
+      url: "/politik/demokrati-rattsstat.html"
     },
     {
       id: "migration-integration",
       title: "Migration & integration",
       sub: "Ordning och reda – och en integration som fungerar i praktiken.",
-      pills: ["Ordning", "Språk", "Arbete"],
-      bullets: [
-        "Tydliga krav och förväntningar för att bli en del av samhället.",
-        "Fokus på språket som nyckel till jobb och gemenskap.",
-        "Starka drivkrafter till arbete och egenförsörjning.",
-        "Insatser mot parallellsamhällen och hedersrelaterat förtryck."
-      ]
+      url: "/politik/migration-integration.html"
     },
     {
       id: "infrastruktur",
       title: "Infrastruktur",
       sub: "Fungerande transporter och digital infrastruktur – för jobb, tillväxt och vardag.",
-      pills: ["Transport", "Underhåll", "Tillväxt"],
-      bullets: [
-        "Prioritera underhåll och framkomlighet där behoven är störst.",
-        "Öka punktlighet och kapacitet i viktiga stråk.",
-        "Snabbare planering och bättre upphandlingar.",
-        "Stärka digital infrastruktur som möjliggör arbete och service i hela landet."
-      ]
+      url: "/politik/infrastruktur.html"
     }
   ];
 
   const topicList = document.getElementById("topicList");
-  const clearTopic = document.getElementById("clearTopic");
-
-  const contentTitle = document.getElementById("contentTitle");
-  const contentSub = document.getElementById("contentSub");
-  const pillRow = document.getElementById("pillRow");
-  const contentBullets = document.getElementById("contentBullets");
-  const contentNote = document.getElementById("contentNote");
-  const copyLinkBtn = document.getElementById("copyLinkBtn");
-
-  let selectedId = null;
 
   function renderList(){
     topicList.innerHTML = "";
 
     topics.forEach(t => {
-      const row = document.createElement("label");
-      row.className = "topic-item";
-      row.setAttribute("data-id", t.id);
+      const a = document.createElement("a");
+      a.className = "topic-link";
+      a.href = t.url;
+      a.target = "_blank";
+      a.rel = "noopener";
+      a.setAttribute("aria-label", `${t.title} – öppna artikel i ny flik`);
 
-      const radio = document.createElement("input");
-      radio.type = "radio";
-      radio.name = "topic";
-      radio.value = t.id;
-      radio.setAttribute("aria-label", t.title);
+      const icon = document.createElement("div");
+      icon.className = "topic-icon";
+      icon.textContent = "•";
 
       const textWrap = document.createElement("div");
 
@@ -978,134 +847,21 @@
       textWrap.appendChild(title);
       textWrap.appendChild(hint);
 
-      row.appendChild(radio);
-      row.appendChild(textWrap);
+      const meta = document.createElement("div");
+      meta.className = "topic-meta";
+      meta.innerHTML = `<span>Artikel</span><span class="ext">↗</span>`;
 
-      row.addEventListener("click", (e) => {
-        // så klick på hela raden funkar
-        e.preventDefault();
-        setTopic(t.id, true);
-      });
+      a.appendChild(icon);
+      a.appendChild(textWrap);
+      a.appendChild(meta);
 
-      topicList.appendChild(row);
+      topicList.appendChild(a);
     });
   }
 
-  function setActiveRow(){
-    const rows = topicList.querySelectorAll(".topic-item");
-    rows.forEach(r => {
-      const id = r.getAttribute("data-id");
-      const input = r.querySelector("input");
-      const isActive = id === selectedId;
-      r.classList.toggle("active", isActive);
-      if (input) input.checked = isActive;
-    });
-  }
-
-  function renderContent(){
-    if(!selectedId){
-      contentTitle.textContent = "Välj ett ämne";
-      contentSub.textContent = "Klicka på ett område till vänster så visas våra mål och förslag här.";
-      pillRow.style.display = "none";
-      pillRow.innerHTML = "";
-      contentBullets.style.display = "none";
-      contentBullets.innerHTML = "";
-      contentNote.textContent = "(Texten här är enkel att uppdatera. Säg till när du vill fylla på med exakta formuleringar per område.)";
-      return;
-    }
-
-    const t = topics.find(x => x.id === selectedId);
-    if(!t) return;
-
-    contentTitle.textContent = t.title;
-    contentSub.textContent = t.sub;
-
-    // pills
-    pillRow.innerHTML = "";
-    if (t.pills && t.pills.length){
-      t.pills.forEach(p => {
-        const pill = document.createElement("span");
-        pill.className = "pill";
-        pill.textContent = p;
-        pillRow.appendChild(pill);
-      });
-      pillRow.style.display = "flex";
-    } else {
-      pillRow.style.display = "none";
-    }
-
-    // bullets
-    contentBullets.innerHTML = "";
-    if (t.bullets && t.bullets.length){
-      t.bullets.forEach(b => {
-        const li = document.createElement("li");
-        li.textContent = b;
-        contentBullets.appendChild(li);
-      });
-      contentBullets.style.display = "block";
-    } else {
-      contentBullets.style.display = "none";
-    }
-
-    contentNote.textContent = "Tips: Dela gärna länken till just det här området (kopiera-länk-knappen).";
-  }
-
-  function setTopic(id, updateHash){
-    selectedId = id;
-    setActiveRow();
-    renderContent();
-
-    if(updateHash){
-      history.replaceState(null, "", "#" + encodeURIComponent(id));
-    }
-  }
-
-  function clearSelection(){
-    selectedId = null;
-    setActiveRow();
-    renderContent();
-    history.replaceState(null, "", window.location.pathname + window.location.search);
-  }
-
-  clearTopic.addEventListener("click", () => clearSelection());
-
-  // Copy link to selected topic
-  copyLinkBtn.addEventListener("click", async () => {
-    const url = new URL(window.location.href);
-    if(selectedId) url.hash = selectedId;
-    else url.hash = "";
-    try{
-      await navigator.clipboard.writeText(url.toString());
-      copyLinkBtn.textContent = "Kopierad ✓";
-      setTimeout(() => (copyLinkBtn.textContent = "Kopiera länk"), 900);
-    }catch{
-      // fallback
-      const tmp = document.createElement("input");
-      tmp.value = url.toString();
-      document.body.appendChild(tmp);
-      tmp.select();
-      document.execCommand("copy");
-      tmp.remove();
-      copyLinkBtn.textContent = "Kopierad ✓";
-      setTimeout(() => (copyLinkBtn.textContent = "Kopiera länk"), 900);
-    }
-  });
-
-  // Initial render + hash support
   renderList();
-
-  function applyHashIfAny(){
-    const raw = (window.location.hash || "").replace("#", "").trim();
-    if(!raw) { clearSelection(); return; }
-    const id = decodeURIComponent(raw);
-    const exists = topics.some(t => t.id === id);
-    if(exists) setTopic(id, false);
-    else clearSelection();
-  }
-
-  window.addEventListener("hashchange", applyHashIfAny);
-  applyHashIfAny();
 </script>
 
 </body>
 </html>
+```
