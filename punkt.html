@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="sv">
 <head>
@@ -95,6 +96,79 @@
       color: var(--text);
     }
 
+    /* ✅ DROPDOWN BUTTON + MENU (added) */
+    .actions{
+      display:flex;
+      gap: 10px;
+      align-items:center;
+    }
+
+    .icon-btn{
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.8);
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      transition: transform 120ms ease, background 120ms ease;
+      box-shadow: 0 10px 30px rgba(16,24,40,0.10);
+    }
+
+    .icon-btn:hover{
+      transform: translateY(-1px);
+      background: rgba(255,255,255,0.95);
+    }
+
+    .burger,
+    .burger:before,
+    .burger:after{
+      content:"";
+      width: 18px;
+      height: 2px;
+      background: var(--text);
+      border-radius: 2px;
+      display: block;
+      position: relative;
+      opacity: 0.9;
+    }
+    .burger:before{ top: -6px; position:absolute; }
+    .burger:after{ top: 6px; position:absolute; }
+
+    .menu-wrap{ position: relative; }
+
+    .menu{
+      position: absolute;
+      top: calc(100% + 10px);
+      right: 0;
+      background: rgba(255,255,255,0.96);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      box-shadow: 0 18px 60px rgba(16,24,40,0.12);
+      min-width: 240px;
+      padding: 8px;
+      display: none;
+      z-index: 60;
+    }
+
+    .menu.open{ display: block; }
+
+    .menu a{
+      display:block;
+      padding: 10px 12px;
+      border-radius: 10px;
+      color: var(--muted);
+      text-decoration: none;
+      font-weight: 750;
+      transition: background 120ms ease, color 120ms ease;
+    }
+
+    .menu a:hover{
+      background: rgba(37,99,235,0.10);
+      color: var(--text);
+    }
+
     /* MAIN CONTENT */
     main{
       max-width: var(--max);
@@ -108,11 +182,11 @@
       font-size: 36px;
       letter-spacing: -0.03em;
       line-height: 1.1;
-       margin-left: 160px; /* justera värdet */
+      margin-left: 160px; /* justera värdet */
     }
 
     .content{
-       margin-left: 160px; /* justera värdet */
+      margin-left: 160px; /* justera värdet */
       max-width: 75ch;
       font-size: 18px;
       line-height: 1.7;
@@ -127,11 +201,7 @@
     /* FOOTER */
     footer{
       border-top: 1px solid var(--line);
-      background: linear-gradient(
-  180deg,
-  #eef4ff,
-  #e6efff
-);
+      background: linear-gradient(180deg, #eef4ff, #e6efff);
       backdrop-filter: blur(10px);
     }
 
@@ -202,6 +272,8 @@
       nav{ display:none; }
       h1{ font-size: 36px; }
       .footer-inner{ grid-template-columns: 1fr; }
+      /* optional: remove left offset on mobile */
+      h1, .content{ margin-left: 0; }
     }
   </style>
 </head>
@@ -221,7 +293,21 @@
       <a href="/engagera/">Engagera dig</a>
     </nav>
 
-    <div></div>
+    <!-- ✅ DROPDOWN (added) -->
+    <div class="actions">
+      <div class="menu-wrap">
+        <button class="icon-btn" id="menuBtn" aria-label="Öppna meny" aria-expanded="false" type="button">
+          <span class="burger" aria-hidden="true"></span>
+        </button>
+
+        <div class="menu" id="menu" role="menu" aria-label="Fler länkar">
+          <a href="/nyheter/" role="menuitem">Nyheter</a>
+          <a href="/press/" role="menuitem">Press</a>
+          <a href="/kontakt/" role="menuitem">Kontakt</a>
+          <a href="/integritet/" role="menuitem">Integritetspolicy</a>
+        </div>
+      </div>
+    </div>
   </div>
 </header>
 
@@ -230,7 +316,6 @@
 
   <div class="content">
     <p>[Skriv din text här. Det kan vara hur långt som helst.]</p>
-
     <p>[Nytt stycke. Håll det rakt, sakligt och lättläst.]</p>
   </div>
 </main>
@@ -272,8 +357,28 @@
 </footer>
 
 <script>
+  // Year
   document.getElementById("year").textContent = new Date().getFullYear();
+
+  // Dropdown (added)
+  const menuBtn = document.getElementById("menuBtn");
+  const menu = document.getElementById("menu");
+
+  function closeMenu(){
+    menu.classList.remove("open");
+    menuBtn?.setAttribute("aria-expanded", "false");
+  }
+
+  menuBtn?.addEventListener("click", (e) => {
+    e.stopPropagation();
+    menu.classList.toggle("open");
+    menuBtn.setAttribute("aria-expanded", menu.classList.contains("open") ? "true" : "false");
+  });
+
+  document.addEventListener("click", () => closeMenu());
+  document.addEventListener("keydown", (e) => { if(e.key === "Escape") closeMenu(); });
 </script>
 
 </body>
 </html>
+```
