@@ -146,7 +146,7 @@ background: rgba(255,255,255,0.78);
       border-color: rgba(37,99,235,0.35);
       color: #fff;
       box-shadow: 0 10px 18px rgba(37,99,235,0.22);
-      margin-left: -170px; 
+     
       padding: 12px 16px;
        
     }
@@ -233,7 +233,7 @@ background: rgba(255,255,255,0.78);
       font-size: 48px;
       letter-spacing: -0.03em;
       line-height: 1.05;
-      margin-left: -170px;
+      
       margin-top: 80px; 
     }
 
@@ -427,6 +427,30 @@ background: rgba(255,255,255,0.78);
       border-top: 1px solid rgba(16,24,40,0.08);
     }
 
+    .hero-grid{
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 48px;
+  align-items: center;
+  margin-top: 80px;
+}
+
+.hero-text h1{
+  margin: 0 0 16px;
+}
+
+.hero-text .lead{
+  margin-left: 0;
+}
+
+.hero-image img{
+  width: 100%;
+  max-width: 520px;
+  height: auto;
+  display: block;
+}
+
+
     /* Responsive */
     @media(max-width: 880px){
       nav{ display: none; }
@@ -439,6 +463,24 @@ background: rgba(255,255,255,0.78);
     @media(max-width: 460px){
       .brand span.brand-text { display: none; }
     }
+
+@media(max-width: 900px){
+  .hero-grid{
+    grid-template-columns: 1fr;
+  }
+
+  .hero-image{
+    order: -1;
+    text-align: center;
+  }
+
+  .hero-image img{
+    max-width: 360px;
+    margin: 0 auto 24px;
+  }
+}
+
+    
   </style>
 </head>
 
@@ -477,22 +519,36 @@ background: rgba(255,255,255,0.78);
 </header>
 
 <main>
-  <h1>Punktpartiet</h1>
+  <div class="hero-grid">
 
+    <!-- VÄNSTER: text -->
+    <div class="hero-text">
+      <h1>Punktpartiet</h1>
 
-    <p class="lead">
-Blockpolitiken har blivit skadlig för Sverige.
-Därför driver vi en politik som utgår från konkreta politiska punkter, inte ideologiska block eller låsningar.
-Varje punkt bedöms för sig – baserat på forskning, fakta och flexibilitet.
-Det är den typen av politik som krävs i ett samhälle som förändras i allt högre takt.
-  </p>
+      <p class="lead">
+        Blockpolitiken har blivit skadlig för Sverige.
+        Därför driver vi en politik som utgår från konkreta politiska punkter,
+        inte ideologiska block eller låsningar.
+        Varje punkt bedöms för sig – baserat på forskning, fakta och flexibilitet.
+        Det är den typen av politik som krävs i ett samhälle som förändras i allt högre takt.
+      </p>
 
-  <p class="lead lead-cta">
-    Vill du bli en del av kampen? Bli medlem idag.
-  </p>
+      <p class="lead lead-cta">
+        Vill du bli en del av kampen? Bli medlem idag.
+      </p>
 
-  <button class="btn secondary" id="openMember2" type="button">Bli medlem</button>
+      <button class="btn secondary" id="openMember2">Bli medlem</button>
+    </div>
+
+    <!-- HÖGER: bild -->
+    <div class="hero-image">
+      <img src="/bilder/punktpartiet-hand.png"
+           alt="En hand som pekar på en blå punkt efter ordet Punktpartiet">
+    </div>
+
+  </div>
 </main>
+
 
 
 <!-- MODAL -->
