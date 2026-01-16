@@ -28,6 +28,10 @@
 
       --radius: 18px;
       --max: 1040px;
+
+      /* ✅ Justera dessa två för “text mer vänster / bild mer höger” */
+      --hero-left-nudge: -120px;   /* mer negativ = mer vänster */
+      --hero-image-max: 980px;     /* större bild på desktop */
     }
 
     *{ box-sizing:border-box; }
@@ -37,8 +41,7 @@
       margin:0;
       font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial;
       color: var(--text);
-background: rgba(255,255,255,0.78);
-
+      background: rgba(255,255,255,0.78);
     }
 
     a{ color: inherit; }
@@ -74,7 +77,6 @@ background: rgba(255,255,255,0.78);
       white-space: nowrap;
     }
 
-    /* LOGO: solid dot + inner shadow + white P */
     .logo{
       width: 34px;
       height: 34px;
@@ -85,7 +87,6 @@ background: rgba(255,255,255,0.78);
       color: #fff;
       font-weight: 900;
       letter-spacing: -0.02em;
-      /* “cool skugga inom punkten” */
       box-shadow:
         inset 0 10px 18px rgba(255,255,255,0.22),
         inset 0 -12px 18px rgba(0,0,0,0.22),
@@ -146,9 +147,7 @@ background: rgba(255,255,255,0.78);
       border-color: rgba(37,99,235,0.35);
       color: #fff;
       box-shadow: 0 10px 18px rgba(37,99,235,0.22);
-     
       padding: 12px 16px;
-       
     }
     .btn.secondary:hover{
       background: #1d4ed8;
@@ -226,40 +225,55 @@ background: rgba(255,255,255,0.78);
       margin: 0 auto;
       padding: 46px 16px 64px;
       min-height: calc(100vh - 260px);
-      padding-right: 300px; 
+    }
+
+    /* ✅ Riktig hero-layout: text vänster (nudgad), bild höger (större) */
+    .hero-grid{
+      display: grid;
+      grid-template-columns: minmax(340px, 1.05fr) minmax(360px, 1.25fr);
+      gap: 56px;
+      align-items: center;
+      margin-top: 70px;
+      overflow: visible;
+    }
+
+    /* Flyttar hela textblocket vänster utan att förstöra layouten */
+    .hero-text{
+      transform: translateX(var(--hero-left-nudge));
     }
 
     h1{
-      margin: 0 0 10px;
-      font-size: 48px;
+      margin: 0 0 12px;
+      font-size: 52px;
       letter-spacing: -0.03em;
       line-height: 1.05;
-      
-      margin-top: 80px; 
     }
 
     .lead{
       max-width: 62ch;
       color: var(--muted);
       font-size: 18px;
-      line-height: 1.55;
+      line-height: 1.6;
       margin: 0 0 22px;
-      margin-left: -170px;
-    
     }
 
     .lead-cta{
-  font-weight: 800;
-  margin-top: 28px;   /* avstånd från texten ovan */
-}
+      font-weight: 800;
+      margin-top: 28px;
+      color: rgba(16,24,40,0.92);
+    }
 
+    /* Bild: större + mer åt höger */
+    .hero-image{
+      justify-self: end;                 /* pressa mot höger i grid */
+      transform: translateX(60px);       /* extra “mer höger” */
+    }
 
-    .hero-card{
-      background: rgba(255,255,255,0.72);
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      padding: 22px;
-      box-shadow: var(--shadow-soft);
+    .hero-image img{
+      width: min(var(--hero-image-max), 52vw); /* stor på desktop, men responsiv */
+      max-width: none;                          /* ✅ låt den bli större än kolumnen */
+      height: auto;
+      display: block;
     }
 
     /* MODAL */
@@ -347,12 +361,7 @@ background: rgba(255,255,255,0.78);
     /* FOOTER */
     footer{
       border-top: 1px solid var(--line);
-    background: linear-gradient(
-  180deg,
-  #eef4ff,
-  #e6efff
-);
-
+      background: linear-gradient(180deg, #eef4ff, #e6efff);
       backdrop-filter: blur(10px);
     }
 
@@ -428,60 +437,39 @@ background: rgba(255,255,255,0.78);
       border-top: 1px solid rgba(16,24,40,0.08);
     }
 
-    .hero-grid{
-  display: grid;
-  grid-template-columns: 1.1fr 0.9fr;
-  gap: 48px;
-  align-items: center;
-  margin-top: 80px;
-}
-
-.hero-text h1{
-  margin: 0 0 16px;
-}
-
-.hero-text .lead{
-  margin-left: 0;
-}
-
-.hero-image img{
-  width: 1200px;
-  max-width: 100%;
-  height: auto;
-  display: block;
-}
-
-
     /* Responsive */
     @media(max-width: 880px){
       nav{ display: none; }
       h1{ font-size: 40px; }
-      .footer-inner{
+      .footer-inner{ grid-template-columns: 1fr; }
+
+      /* Nollställ “nudges” på mindre skärmar */
+      .hero-text{ transform: none; }
+      .hero-image{ transform: none; }
+      .hero-image img{ width: min(520px, 86vw); }
+    }
+
+    @media(max-width: 900px){
+      .hero-grid{
         grid-template-columns: 1fr;
+        gap: 26px;
+      }
+
+      .hero-image{
+        order: -1;
+        justify-self: center;
+        text-align: center;
+      }
+
+      .hero-image img{
+        width: min(420px, 86vw);
+        margin: 0 auto;
       }
     }
 
     @media(max-width: 460px){
       .brand span.brand-text { display: none; }
     }
-
-@media(max-width: 900px){
-  .hero-grid{
-    grid-template-columns: 1fr;
-  }
-
-  .hero-image{
-    order: -1;
-    text-align: center;
-  }
-
-  .hero-image img{
-    max-width: 360px;
-    margin: 0 auto 24px;
-  }
-}
-
-    
   </style>
 </head>
 
@@ -522,7 +510,6 @@ background: rgba(255,255,255,0.78);
 <main>
   <div class="hero-grid">
 
-    <!-- VÄNSTER: text -->
     <div class="hero-text">
       <h1>Punktpartiet</h1>
 
@@ -541,7 +528,6 @@ background: rgba(255,255,255,0.78);
       <button class="btn secondary" id="openMember2">Bli medlem</button>
     </div>
 
-    <!-- HÖGER: bild -->
     <div class="hero-image">
       <img src="bilder/punktpartiet-hand.png"
            alt="En hand som pekar på en blå punkt efter ordet Punktpartiet">
@@ -549,8 +535,6 @@ background: rgba(255,255,255,0.78);
 
   </div>
 </main>
-
-
 
 <!-- MODAL -->
 <div class="backdrop" id="backdrop"></div>
@@ -704,7 +688,6 @@ background: rgba(255,255,255,0.78);
       if(res.ok){
         status.textContent = "Tack! Vi hör av oss.";
         form.reset();
-        // valfritt: stäng efter kort delay
         setTimeout(closeModal, 850);
       }else{
         status.textContent = "Något gick fel.";
@@ -717,3 +700,4 @@ background: rgba(255,255,255,0.78);
 
 </body>
 </html>
+
