@@ -473,8 +473,7 @@
     @media(max-width: 460px){
       .brand span.brand-text { display: none; }
     }
-
-    /* NYHETER – tre kort på rad */
+/* NYHETER – tre bilder på rad, utan kort */
 .news-section{
   max-width: var(--max);
   margin: 80px auto 0;
@@ -487,39 +486,35 @@
   gap: 32px;
 }
 
-.news-card{
-  background: var(--surface);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow-soft);
-  overflow: hidden;
-}
-
-.news-card img{
+.news-item img{
   width: 100%;
-  height: 200px;
+  height: 220px;
   object-fit: cover;
   display: block;
 }
 
-.news-card h3{
-  margin: 16px 16px 8px;
+.news-item h3{
+  margin: 14px 0 6px;
   font-size: 20px;
   line-height: 1.25;
 }
 
-.news-card p{
-  margin: 0 16px 18px;
+.news-item p{
+  margin: 0;
   color: var(--muted);
   line-height: 1.5;
 }
 
-/* Responsivt – stapla på mobil */
+/* Mobil */
 @media(max-width: 900px){
   .news-grid{
     grid-template-columns: 1fr;
+    gap: 40px;
   }
 }
 
+
+    
   </style>
 </head>
 
@@ -588,29 +583,29 @@
   <section class="news-section">
   <div class="news-grid">
 
-    <article class="news-card">
+    <div class="news-item">
       <img src="bilder/news-1.jpg" alt="Nyhetsbild 1">
       <h3>Exempelrubrik ett</h3>
       <p>
-        Kort exempeltext som beskriver en politisk händelse eller ett ställningstagande.
+        Här är exempeltext som du senare kan byta ut mot riktig nyhetstext.
       </p>
-    </article>
+    </div>
 
-    <article class="news-card">
+    <div class="news-item">
       <img src="bilder/news-2.jpg" alt="Nyhetsbild 2">
       <h3>Exempelrubrik två</h3>
       <p>
-        Ytterligare en kort sammanfattning som du senare kan byta ut mot riktig text.
+        Kort beskrivning av ett politiskt utspel, beslut eller debatt.
       </p>
-    </article>
+    </div>
 
-    <article class="news-card">
+    <div class="news-item">
       <img src="bilder/news-3.jpg" alt="Nyhetsbild 3">
       <h3>Exempelrubrik tre</h3>
       <p>
-        En tredje nyhet, debattartikel eller politisk punkt som lyfts fram.
+        Ytterligare exempeltext som visar hur layouten kommer se ut.
       </p>
-    </article>
+    </div>
 
   </div>
 </section>
