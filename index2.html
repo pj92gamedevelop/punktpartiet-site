@@ -1,0 +1,782 @@
+
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Punktpartiet</title>
+  <meta name="theme-color" content="#f7f8fb" />
+
+  <style>
+    :root{
+      /* Light theme */
+      --bg: #f7f8fb;
+      --bg-alt: #eef2f7;
+      --surface: #ffffff;
+      --surface-2: #f3f6fb;
+
+      --text: #101828;
+      --muted: #475467;
+
+      --line: rgba(16,24,40,0.12);
+
+      /* Accent (keep a clean political blue) */
+      --accent: #2563eb;
+      --accent-soft: rgba(37,99,235,0.12);
+
+      --shadow: 0 18px 60px rgba(16,24,40,0.12);
+      --shadow-soft: 0 10px 30px rgba(16,24,40,0.10);
+
+      --radius: 18px;
+      --max: 1040px;
+
+      /* ✅ Justera dessa två för “text mer vänster / bild mer höger” */
+      --hero-left-nudge: -100px;   /* mer negativ = mer vänster */
+      --hero-image-max: 550px;     /* större bild på desktop */
+    }
+
+    *{ box-sizing:border-box; }
+    html, body { height: 100%; }
+
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      color: var(--text);
+      background: rgba(255,255,255,0.78);
+    }
+
+    a{ color: inherit; }
+
+    /* HEADER */
+    header{
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(10px);
+      background: rgba(255,255,255,0.78);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .header-inner{
+      max-width: var(--max);
+      margin: auto;
+      padding: 12px 16px;
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .brand{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      text-decoration:none;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+      color: var(--text);
+      white-space: nowrap;
+    }
+
+    .logo{
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: var(--accent);
+      color: #fff;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      box-shadow:
+        inset 0 10px 18px rgba(255,255,255,0.22),
+        inset 0 -12px 18px rgba(0,0,0,0.22),
+        0 10px 18px rgba(37,99,235,0.25);
+    }
+
+    nav{
+      display: flex;
+      justify-content: center;
+      gap: 18px;
+    }
+
+    nav a{
+      color: var(--muted);
+      text-decoration: none;
+      font-weight: 700;
+      padding: 8px 10px;
+      border-radius: 12px;
+      transition: background 120ms ease, color 120ms ease;
+    }
+
+    nav a:hover{
+      background: rgba(16,24,40,0.04);
+      color: var(--text);
+    }
+
+    .actions{
+      display:flex;
+      gap: 10px;
+      align-items:center;
+    }
+
+    .btn{
+      border: 1px solid var(--line);
+      background: transparent;
+      color: var(--text);
+      padding: 10px 14px;
+      border-radius: 999px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: transform 120ms ease, background 120ms ease, border-color 120ms ease;
+    }
+    .btn:hover{ transform: translateY(-1px); }
+
+    .btn.primary{
+      background: var(--accent);
+      border-color: rgba(37,99,235,0.35);
+      color: #fff;
+      box-shadow: 0 10px 18px rgba(37,99,235,0.22);
+    }
+    .btn.primary:hover{
+      background: #1d4ed8;
+      border-color: rgba(29,78,216,0.45);
+    }
+
+    .btn.secondary{
+      background: var(--accent);
+      border-color: rgba(37,99,235,0.35);
+      color: #fff;
+      box-shadow: 0 10px 18px rgba(37,99,235,0.22);
+      padding: 12px 16px;
+    }
+    .btn.secondary:hover{
+      background: #1d4ed8;
+      border-color: rgba(29,78,216,0.45);
+    }
+
+    .icon-btn{
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.8);
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      transition: transform 120ms ease, background 120ms ease;
+      box-shadow: var(--shadow-soft);
+    }
+    .icon-btn:hover{
+      transform: translateY(-1px);
+      background: rgba(255,255,255,0.95);
+    }
+
+    .burger,
+    .burger:before,
+    .burger:after{
+      content:"";
+      width: 18px;
+      height: 2px;
+      background: var(--text);
+      border-radius: 2px;
+      display: block;
+      position: relative;
+      opacity: 0.9;
+    }
+    .burger:before{ top: -6px; position:absolute; }
+    .burger:after{ top: 6px; position:absolute; }
+
+    /* DROPDOWN */
+    .menu-wrap{ position: relative; }
+
+    .menu{
+      position: absolute;
+      top: calc(100% + 10px);
+      right: 0;
+      background: rgba(255,255,255,0.96);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      box-shadow: var(--shadow);
+      min-width: 240px;
+      padding: 8px;
+      display: none;
+    }
+
+    .menu.open{ display: block; }
+
+    .menu a{
+      display:block;
+      padding: 10px 12px;
+      border-radius: 10px;
+      color: var(--muted);
+      text-decoration: none;
+      font-weight: 750;
+      transition: background 120ms ease, color 120ms ease;
+    }
+
+    .menu a:hover{
+      background: rgba(37,99,235,0.10);
+      color: var(--text);
+    }
+
+    /* PAGE */
+    main{
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 46px 16px 64px;
+      min-height: calc(100vh - 260px);
+    }
+
+    /* ✅ Riktig hero-layout: text vänster (nudgad), bild höger (större) */
+    .hero-grid{
+      display: grid;
+      grid-template-columns: minmax(440px, 1.7fr) minmax(360px, 1.25fr);
+      gap: 56px;
+      align-items: center;
+      margin-top: 70px;
+      overflow: visible;
+    }
+
+    /* Flyttar hela textblocket vänster utan att förstöra layouten */
+    .hero-text{
+      transform: translateX(var(--hero-left-nudge));
+    }
+
+    h1{
+      margin: 0 0 12px;
+      font-size: 52px;
+      letter-spacing: -0.03em;
+      line-height: 1.05;
+    }
+
+    .lead{
+      max-width: 100ch;
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.6;
+      margin: 0 0 22px;
+    }
+
+
+
+    .lead-cta{
+      font-weight: 800;
+      margin-top: 28px;
+      color: rgba(16,24,40,0.92);
+    }
+
+    /* Bild: större + mer åt höger */
+    .hero-image{
+      justify-self: end;                 /* pressa mot höger i grid */
+      transform: translateX(130px);       /* extra “mer höger” */
+    }
+
+    .hero-image img{
+      width: min(var(--hero-image-max), 52vw); /* stor på desktop, men responsiv */
+      max-width: none;                          /* ✅ låt den bli större än kolumnen */
+      height: auto;
+      display: block;
+    }
+
+    /* MODAL */
+    .backdrop{
+      position: fixed;
+      inset: 0;
+      background: rgba(16,24,40,0.45);
+      display: none;
+      z-index: 80;
+    }
+
+    .modal{
+      position: fixed;
+      inset: 0;
+      display: none;
+      place-items: center;
+      z-index: 90;
+      padding: 16px;
+    }
+
+    .modal-card{
+      width: min(640px, 100%);
+      background: rgba(255,255,255,0.98);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 20px;
+      box-shadow: var(--shadow);
+    }
+
+    .modal.open,
+    .backdrop.open{
+      display: grid;
+    }
+
+    .modal-top{
+      display:flex;
+      align-items:center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+
+    .modal-top h2{
+      margin: 0;
+      letter-spacing: -0.02em;
+    }
+
+    .modal-sub{
+      margin: 0 0 14px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    label{
+      display:block;
+      margin-bottom: 10px;
+      font-weight: 800;
+      font-size: 13px;
+      color: rgba(16,24,40,0.9);
+    }
+
+    input, textarea{
+      width: 100%;
+      padding: 10px 12px;
+      border-radius: 12px;
+      border: 1px solid rgba(16,24,40,0.16);
+      background: rgba(16,24,40,0.03);
+      color: var(--text);
+      outline: none;
+    }
+
+    input:focus, textarea:focus{
+      border-color: rgba(37,99,235,0.45);
+      box-shadow: 0 0 0 4px rgba(37,99,235,0.10);
+      background: rgba(37,99,235,0.04);
+    }
+
+    #status{
+      margin: 10px 0 0;
+      color: var(--muted);
+      font-weight: 650;
+      min-height: 1.2em;
+    }
+
+    /* FOOTER */
+    footer{
+      border-top: 1px solid var(--line);
+      background: linear-gradient(180deg, #eef4ff, #e6efff);
+      backdrop-filter: blur(10px);
+    }
+
+    .footer-inner{
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 26px 16px;
+      display: grid;
+      grid-template-columns: 1.2fr 1fr 1fr;
+      gap: 18px;
+      align-items: start;
+    }
+
+    .footer-brand{
+      display:flex;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .footer-title{
+      font-weight: 900;
+      letter-spacing: -0.01em;
+      margin: 0;
+    }
+
+    .footer-muted{
+      margin: 6px 0 0;
+      color: var(--muted);
+      line-height: 1.5;
+      max-width: 42ch;
+      font-weight: 600;
+    }
+
+    .footer-col h4{
+      margin: 6px 0 10px;
+      font-size: 13px;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      color: rgba(16,24,40,0.7);
+    }
+
+    .footer-links{
+      display: grid;
+      gap: 8px;
+    }
+
+    .footer-links a{
+      color: var(--muted);
+      text-decoration: none;
+      font-weight: 700;
+      padding: 6px 8px;
+      border-radius: 10px;
+      width: fit-content;
+      transition: background 120ms ease, color 120ms ease;
+    }
+
+    .footer-links a:hover{
+      background: rgba(37,99,235,0.10);
+      color: var(--text);
+    }
+
+    .footer-bottom{
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 14px 16px 22px;
+      display:flex;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      color: rgba(16,24,40,0.65);
+      font-weight: 650;
+      border-top: 1px solid rgba(16,24,40,0.08);
+    }
+
+    /* Responsive */
+    @media(max-width: 880px){
+      nav{ display: none; }
+      h1{ font-size: 40px; }
+      .footer-inner{ grid-template-columns: 1fr; }
+
+      /* Nollställ “nudges” på mindre skärmar */
+      .hero-text{ transform: none; }
+      .hero-image{ transform: none; }
+      .hero-image img{ width: min(520px, 86vw); }
+    }
+
+    @media(max-width: 900px){
+      .hero-grid{
+        grid-template-columns: 1fr;
+        gap: 26px;
+      }
+
+      .hero-image{
+        order: -1;
+        justify-self: center;
+        text-align: center;
+      }
+
+      .hero-image img{
+        width: min(420px, 86vw);
+        margin: 0 auto;
+      }
+    }
+
+    @media(max-width: 460px){
+      .brand span.brand-text { display: none; }
+    }
+
+    /* NYHETER – tre kort på rad */
+.news-section{
+  max-width: var(--max);
+  margin: 80px auto 0;
+  padding: 0 16px;
+}
+
+.news-grid{
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+}
+
+.news-card{
+  background: var(--surface);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-soft);
+  overflow: hidden;
+}
+
+.news-card img{
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  display: block;
+}
+
+.news-card h3{
+  margin: 16px 16px 8px;
+  font-size: 20px;
+  line-height: 1.25;
+}
+
+.news-card p{
+  margin: 0 16px 18px;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+/* Responsivt – stapla på mobil */
+@media(max-width: 900px){
+  .news-grid{
+    grid-template-columns: 1fr;
+  }
+}
+
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="/" class="brand" aria-label="Punktpartiet – startsida">
+      <div class="logo" aria-hidden="true">P</div>
+      <span class="brand-text">Punktpartiet</span>
+    </a>
+
+    <nav aria-label="Huvudmeny">
+      <a href="/varpolitik.html">Vår politik</a>
+      <a href="/politiker/">Våra politiker</a>
+      <a href="/engagera/">Engagera dig</a>
+    </nav>
+
+    <div class="actions">
+      <button class="btn primary" id="openMember">Bli medlem</button>
+
+      <div class="menu-wrap">
+        <button class="icon-btn" id="menuBtn" aria-label="Öppna meny" aria-expanded="false">
+          <span class="burger" aria-hidden="true"></span>
+        </button>
+
+        <div class="menu" id="menu" role="menu" aria-label="Fler länkar">
+          <a href="/nyheter/" role="menuitem">Nyheter</a>
+          <a href="/press/" role="menuitem">Press</a>
+          <a href="/kontakt/" role="menuitem">Kontakt</a>
+          <a href="/varpolitik/" role="menuitem">Vår Politik</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main>
+  <div class="hero-grid">
+
+    <div class="hero-text">
+      <h1>Punktpartiet</h1>
+
+<p class="lead">
+  Blockpolitiken har blivit skadlig för Sverige.
+  Därför driver vi en politik som utgår från konkreta politiska punkter, inte ideologiska block eller låsningar.
+  Varje punkt bedöms för sig – baserat på forskning, fakta och flexibilitet.
+  Det är den typen av politik som krävs i ett samhälle som förändras i allt högre takt.
+</p>
+
+      <p class="lead lead-cta">
+        Vill du bli en del av kampen? Bli medlem idag.
+      </p>
+
+      <button class="btn secondary" id="openMember2">Bli medlem</button>
+    </div>
+
+    <div class="hero-image">
+      <img src="bilder/punktpartiet-hand.png"
+           alt="En hand som pekar på en blå punkt efter ordet Punktpartiet">
+    </div>
+
+  </div>
+</main>
+
+  <section class="news-section">
+  <div class="news-grid">
+
+    <article class="news-card">
+      <img src="bilder/news-1.jpg" alt="Nyhetsbild 1">
+      <h3>Exempelrubrik ett</h3>
+      <p>
+        Kort exempeltext som beskriver en politisk händelse eller ett ställningstagande.
+      </p>
+    </article>
+
+    <article class="news-card">
+      <img src="bilder/news-2.jpg" alt="Nyhetsbild 2">
+      <h3>Exempelrubrik två</h3>
+      <p>
+        Ytterligare en kort sammanfattning som du senare kan byta ut mot riktig text.
+      </p>
+    </article>
+
+    <article class="news-card">
+      <img src="bilder/news-3.jpg" alt="Nyhetsbild 3">
+      <h3>Exempelrubrik tre</h3>
+      <p>
+        En tredje nyhet, debattartikel eller politisk punkt som lyfts fram.
+      </p>
+    </article>
+
+  </div>
+</section>
+
+
+<!-- MODAL -->
+<div class="backdrop" id="backdrop"></div>
+
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-label="Bli medlem">
+  <div class="modal-card">
+    <div class="modal-top">
+      <h2>Bli medlem</h2>
+      <button class="icon-btn" id="closeX" type="button" aria-label="Stäng">✕</button>
+    </div>
+    <p class="modal-sub">Fyll i formuläret så kontaktar vi dig. (Skickas via Resend.)</p>
+
+    <form id="memberForm">
+      <label>Förnamn
+        <input name="firstName" required>
+      </label>
+
+      <label>Efternamn
+        <input name="lastName" required>
+      </label>
+
+      <label>E-post
+        <input type="email" name="email" required>
+      </label>
+
+      <label>Telefon (valfritt)
+        <input name="phone" autocomplete="tel">
+      </label>
+
+      <label>Meddelande (valfritt)
+        <textarea name="message" rows="4"></textarea>
+      </label>
+
+      <button class="btn primary" type="submit">Skicka</button>
+      <button class="btn" type="button" id="closeMember">Avbryt</button>
+
+      <p id="status" aria-live="polite"></p>
+    </form>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-brand">
+        <div class="logo" aria-hidden="true">P</div>
+        <div>
+          <p class="footer-title">Punktpartiet</p>
+          <p class="footer-muted">Evidensbaserad och saklig politik.</p>
+        </div>
+      </div>
+      <p class="footer-muted">
+        Vill du engagera dig? Bli medlem eller kontakta oss – vi återkommer så snabbt vi kan.
+      </p>
+    </div>
+
+    <div class="footer-col">
+      <h4>Huvud</h4>
+      <div class="footer-links">
+        <a href="/politik/">Vår politik</a>
+        <a href="/politiker/">Våra politiker</a>
+        <a href="/engagera/">Engagera dig</a>
+      </div>
+    </div>
+
+    <div class="footer-col">
+      <h4>Mer</h4>
+      <div class="footer-links">
+        <a href="/nyheter/">Nyheter</a>
+        <a href="/press/">Press</a>
+        <a href="/kontakt/">Kontakt</a>
+        <a href="/integritet/">Integritetspolicy</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <span>© <span id="year"></span> Punktpartiet</span>
+  </div>
+</footer>
+
+<script>
+  // Dropdown
+  const menuBtn = document.getElementById("menuBtn");
+  const menu = document.getElementById("menu");
+
+  function closeMenu(){
+    menu.classList.remove("open");
+    menuBtn?.setAttribute("aria-expanded", "false");
+  }
+
+  menuBtn.onclick = (e) => {
+    e.stopPropagation();
+    menu.classList.toggle("open");
+    menuBtn.setAttribute("aria-expanded", menu.classList.contains("open") ? "true" : "false");
+  };
+
+  document.addEventListener("click", () => closeMenu());
+  document.addEventListener("keydown", (e) => { if(e.key === "Escape") closeMenu(); });
+
+  // Modal
+  const modal = document.getElementById("modal");
+  const backdrop = document.getElementById("backdrop");
+  const openBtn = document.getElementById("openMember");
+  const openBtn2 = document.getElementById("openMember2");
+  const closeBtn = document.getElementById("closeMember");
+  const closeX = document.getElementById("closeX");
+
+  function openModal(){
+    modal.classList.add("open");
+    backdrop.classList.add("open");
+    closeMenu();
+  }
+  function closeModal(){
+    modal.classList.remove("open");
+    backdrop.classList.remove("open");
+    const status = document.getElementById("status");
+    if(status) status.textContent = "";
+  }
+
+  openBtn.onclick = openModal;
+  openBtn2.onclick = openModal;
+  closeBtn.onclick = closeModal;
+  closeX.onclick = closeModal;
+  backdrop.onclick = closeModal;
+
+  document.addEventListener("keydown", (e) => {
+    if(e.key === "Escape") closeModal();
+  });
+
+  // Footer year
+  document.getElementById("year").textContent = new Date().getFullYear();
+
+  // Form submit (Resend via Worker)
+  const form = document.getElementById("memberForm");
+  const status = document.getElementById("status");
+
+  form.onsubmit = async (e) => {
+    e.preventDefault();
+    status.textContent = "Skickar…";
+
+    const data = Object.fromEntries(new FormData(form));
+
+    try {
+      const res = await fetch("https://api.punktpartiet.se/member", {
+        method:"POST",
+        headers:{ "Content-Type":"application/json" },
+        body:JSON.stringify(data)
+      });
+
+      if(res.ok){
+        status.textContent = "Tack! Vi hör av oss.";
+        form.reset();
+        setTimeout(closeModal, 850);
+      }else{
+        status.textContent = "Något gick fel.";
+      }
+    } catch {
+      status.textContent = "Nätverksfel.";
+    }
+  };
+</script>
+
+</body>
+</html>
